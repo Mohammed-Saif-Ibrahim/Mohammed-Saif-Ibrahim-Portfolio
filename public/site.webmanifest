@@ -1,0 +1,16 @@
+{
+  "name": "Mohammed Saif Ibrahim — Full Stack Developer",
+  "short_name": "Mohammed Saif Ibrahim",
+  "description": "Full Stack Developer specializing in React, Node.js, and scalable web applications.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080A0F",
+  "theme_color": "#080A0F",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
