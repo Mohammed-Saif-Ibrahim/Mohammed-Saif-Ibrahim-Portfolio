@@ -122,14 +122,14 @@ export default function About() {
               <span className="text-[#00FF94]">&quot;location&quot;</span>
               <span className="text-white">: </span>
               <span className="text-[#94A3B8]">
-                &quot;Remote / On-site&quot;
+                &quot;Remote&quot;
               </span>
               <span className="text-[#4A5568]">,</span>
             </div>
             <div className="pl-4">
-              <span className="text-[#00FF94]">&quot;graduation&quot;</span>
+              <span className="text-[#00FF94]">&quot;graduated&quot;</span>
               <span className="text-white">: </span>
-              <span className="text-[#94A3B8]">2026</span>
+              <span className="text-[#94A3B8]">&quot;July 2026&quot;</span>
               <span className="text-[#4A5568]">,</span>
             </div>
             <div className="pl-4">

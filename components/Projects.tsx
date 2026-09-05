@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { projects } from "@/lib/projects";
 
 export default function Projects() {
@@ -36,7 +37,7 @@ export default function Projects() {
             </p>
             <span className="h-px min-w-[16px] flex-1 bg-[#1A1F2E]" />
             <span className="whitespace-nowrap border border-[#00FF94]/30 px-2 py-1 font-mono text-[9px] tracking-widest text-[#00FF94] sm:px-2.5 sm:text-[10px]">
-              100% REAL CLIENT WORK
+              REAL PRODUCTION WORK
             </span>
           </div>
           <h2 className="font-display text-5xl tracking-wide text-white md:text-6xl">
@@ -44,9 +45,9 @@ export default function Projects() {
           </h2>
           <div className="mt-3 h-px w-16 bg-[#00FF94]" />
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#94A3B8]">
-            Every project below was built for an actual client with real
-            production requirements — not tutorials, not clones. Shipped,
-            deployed, and in some cases still running live today.
+            A mix of real client work and independently built products with
+            production-level requirements — not tutorials, not clones.
+            Shipped, deployed, and in some cases still running live today.
           </p>
           <p className="mt-4 font-mono text-xs tracking-widest text-[#4A5568]">
             {projects.length} PROJECTS · {clientCount} CLIENTS · CLICK{" "}
@@ -83,7 +84,7 @@ export default function Projects() {
                   <div className="space-y-4 md:col-span-3">
                     <div className="flex items-start gap-4">
                       <div
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded border border-[#1A1F2E] text-3xl transition-all duration-300"
+                        className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded border border-[#1A1F2E] text-3xl transition-all duration-300"
                         style={{
                           borderColor:
                             hoveredIdx === idx
@@ -95,7 +96,17 @@ export default function Projects() {
                               : undefined,
                         }}
                       >
-                        {project.icon}
+                        {project.logoSrc ? (
+                          <Image
+                            src={project.logoSrc}
+                            alt={`${project.name} logo`}
+                            width={28}
+                            height={28}
+                            className="h-7 w-7 object-contain"
+                          />
+                        ) : (
+                          project.icon
+                        )}
                       </div>
 
                       <div className="min-w-0 flex-1">
@@ -124,9 +135,13 @@ export default function Projects() {
                           >
                             {project.status}
                           </span>
-                          {project.client && (
+                          {project.client ? (
                             <span className="border border-[#1A1F2E] px-2 py-0.5 font-mono text-[10px] tracking-widest text-[#4A5568]">
                               ✓ CLIENT PROJECT
+                            </span>
+                          ) : (
+                            <span className="border border-[#1A1F2E] px-2 py-0.5 font-mono text-[10px] tracking-widest text-[#4A5568]">
+                              ◆ INDEPENDENT PRODUCT
                             </span>
                           )}
                           {project.featured && (
@@ -144,9 +159,13 @@ export default function Projects() {
                         >
                           {project.tagline}
                         </p>
-                        {project.client && (
+                        {project.client ? (
                           <p className="mt-1 font-mono text-[10px] tracking-wide text-[#4A5568]">
                             CLIENT: {project.client.toUpperCase()}
+                          </p>
+                        ) : (
+                          <p className="mt-1 font-mono text-[10px] tracking-wide text-[#4A5568]">
+                            SELF-INITIATED · NO CLIENT
                           </p>
                         )}
                       </div>
@@ -253,6 +272,30 @@ export default function Projects() {
                       LIVE SITE
                       <svg
                         className="h-3 w-3 transition-transform duration-200 group-hover/live:-translate-y-0.5 group-hover/live:translate-x-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 17L17 7M7 7h10v10"
+                        />
+                      </svg>
+                    </a>
+                  )}
+
+                  {project.repoUrl && (
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/repo flex items-center gap-2 whitespace-nowrap font-mono text-[11px] tracking-widest text-[#4A5568] transition-all duration-200 hover:gap-3 hover:text-white"
+                    >
+                      SOURCE
+                      <svg
+                        className="h-3 w-3 transition-transform duration-200 group-hover/repo:-translate-y-0.5 group-hover/repo:translate-x-0.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

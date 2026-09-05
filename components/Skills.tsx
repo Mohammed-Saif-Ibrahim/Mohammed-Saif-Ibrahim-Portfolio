@@ -1,127 +1,108 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-const skillGroups = [
+interface SkillGroup {
+  category: string;
+  icon: string;
+  skills: string[];
+}
+
+const skillGroups: SkillGroup[] = [
   {
     category: "Frontend",
     icon: "◈",
     skills: [
-      { name: "React", level: 90 },
-      { name: "Next.js", level: 85 },
-      { name: "TypeScript", level: 80 },
-      { name: "JavaScript", level: 90 },
-      { name: "Tailwind CSS", level: 90 },
-      { name: "HTML5 / CSS", level: 90 },
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "HTML / CSS",
     ],
   },
   {
     category: "Backend & APIs",
     icon: "⬡",
     skills: [
-      { name: "Node.js", level: 88 },
-      { name: "Express.js", level: 85 },
-      { name: "REST APIs", level: 90 },
-      { name: "Business Logic", level: 90 },
-      { name: "Background Services", level: 82 },
+      "Node.js",
+      "Fastify",
+      "Express.js",
+      "REST APIs",
+      "Background Services",
+      "Business Logic",
     ],
   },
   {
-    category: "Database & Data",
+    category: "Databases & Data",
     icon: "◎",
     skills: [
-      { name: "Microsoft SQL Server", level: 88 },
-      { name: "SQL / Query Design", level: 85 },
-      { name: "Data Modeling", level: 78 },
-      { name: "PostgreSQL", level: 70 },
+      "SQL Server",
+      "PostgreSQL",
+      "SQL",
+      "Data Modeling",
+      "Query Design",
     ],
   },
   {
     category: "Integrations & Automation",
     icon: "✦",
     skills: [
-      { name: "WhatsApp APIs", level: 82 },
-      { name: "SMS Gateways", level: 80 },
-      { name: "Email / SMTP", level: 82 },
-      { name: "Scheduled Workflows", level: 85 },
-      { name: "Qatar GTA E-Invoicing", level: 78 },
+      "WhatsApp APIs",
+      "SMS Gateways",
+      "Email / SMTP",
+      "Scheduled Workflows",
+      "E-Invoicing",
     ],
   },
   {
     category: "AI & Intelligent Systems",
     icon: "◇",
     skills: [
-      { name: "Ollama", level: 78 },
-      { name: "Qwen3", level: 75 },
-      { name: "Embeddings", level: 72 },
-      { name: "Semantic Retrieval", level: 72 },
-      { name: "Capability Routing", level: 78 },
-      { name: "Deterministic AI Tools", level: 80 },
+      "Ollama",
+      "Qwen3",
+      "Embeddings",
+      "Semantic Retrieval",
+      "Capability Routing",
     ],
   },
   {
     category: "Deployment & Tooling",
     icon: "△",
-    skills: [
-      { name: "Git / GitHub", level: 90 },
-      { name: "Vercel", level: 85 },
-      { name: "Windows Services", level: 80 },
-      { name: "WinSW", level: 75 },
-      { name: "Inno Setup", level: 75 },
-      { name: "VS Code", level: 95 },
-    ],
+    skills: ["Git / GitHub", "Vercel", "Windows Services", "WinSW", "Inno Setup"],
   },
 ];
 
-const techBadges = [
+const primaryStack = [
   "React",
   "Next.js",
   "TypeScript",
-  "JavaScript",
-  "HTML5",
-  "CSS",
-  "Tailwind CSS",
-
   "Node.js",
-  "Express.js",
-  "REST APIs",
-  "Axios",
-
-  "Microsoft SQL Server",
+  "Fastify",
+  "SQL Server",
   "PostgreSQL",
-  "SQL",
-  "Data Modeling",
-
+  "Tailwind CSS",
   "Git",
-  "GitHub",
-  "Vercel",
-  "Windows Services",
-  "WinSW",
-  "Inno Setup",
+];
 
-  "WhatsApp API",
-  "SMS Gateway",
-  "Email / SMTP",
-
-  "Qatar GTA E-Invoicing",
-
-  "Ollama",
-  "Qwen3",
-  "nomic-embed-text",
+const engineeringFocus = [
+  "API Design",
+  "Data Modeling",
+  "System Integration",
+  "Background Processing",
+  "Business Logic",
+  "AI Integration",
   "Semantic Retrieval",
-  "AI Capability Routing",
-  "Deterministic AI Tools",
+  "Deployment",
 ];
 
 export default function Skills() {
   const ref = useRef<HTMLDivElement>(null);
-  const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           e.target.classList.toggle("visible", e.isIntersecting);
-          if (e.isIntersecting) setAnimated(true);
         });
       },
       { threshold: 0.1 },
@@ -143,10 +124,14 @@ export default function Skills() {
           TECH STACK
         </h2>
         <div className="mt-3 h-px w-16 bg-[#00FF94]" />
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#94A3B8]">
+          Technologies and engineering practices I use to build full-stack
+          applications, integrations, and developer tools.
+        </p>
       </div>
 
-      {/* Skill bars grid */}
-      <div className="mb-16 grid gap-8 md:grid-cols-2">
+      {/* Skill category cards */}
+      <div className="mb-20 grid gap-6 md:grid-cols-2">
         {skillGroups.map((group, gi) => (
           <div
             key={group.category}
@@ -159,48 +144,47 @@ export default function Skills() {
                 {group.category}
               </span>
             </div>
-            <div className="space-y-4">
-              {group.skills.map((skill, si) => (
-                <div key={skill.name}>
-                  <div className="mb-1.5 flex items-center justify-between">
-                    <span className="font-mono text-sm text-[#94A3B8]">
-                      {skill.name}
-                    </span>
-                    <span className="font-mono text-xs text-[#00FF94]">
-                      {skill.level}%
-                    </span>
-                  </div>
-                  <div className="relative h-px overflow-hidden bg-[#1A1F2E]">
-                    <div
-                      className="skill-bar-fill absolute left-0 top-0 h-full bg-gradient-to-r from-[#00FF94] to-[#00FF94]/50"
-                      style={{
-                        width: animated ? `${skill.level}%` : "0%",
-                        transitionDelay: `${gi * 80 + si * 60}ms`,
-                      }}
-                    />
-                  </div>
-                </div>
+
+            <div className="flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="skill-tag cursor-default border border-[#1A1F2E] px-3 py-1.5 font-mono text-xs text-[#E2E8F0]"
+                >
+                  {skill}
+                </span>
               ))}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Tag cloud */}
-      <div className="reveal">
-        <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.3em] text-[#4A5568]">
-          Full Stack
+      {/* Primary stack */}
+      <div className="reveal mb-16">
+        <p className="mb-5 font-mono text-xs tracking-[0.3em] text-[#00FF94]">
+          PRIMARY STACK
         </p>
-        <div className="flex flex-wrap gap-2">
-          {techBadges.map((tech) => (
+        <div className="mb-6 h-px bg-[#1A1F2E]" />
+        <div className="flex flex-wrap gap-3">
+          {primaryStack.map((tech) => (
             <span
               key={tech}
-              className="skill-tag cursor-default border border-[#1A1F2E] px-3 py-1.5 font-mono text-xs text-[#4A5568]"
+              className="cursor-default border border-[#00FF94]/30 px-4 py-2 font-mono text-sm text-[#00FF94] transition-colors duration-200 hover:bg-[#00FF94]/10"
             >
               {tech}
             </span>
           ))}
         </div>
+      </div>
+
+      {/* Engineering focus */}
+      <div className="reveal">
+        <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.3em] text-[#4A5568]">
+          Engineering Focus
+        </p>
+        <p className="max-w-3xl font-mono text-sm leading-loose text-[#94A3B8]">
+          {engineeringFocus.join(" · ")}
+        </p>
       </div>
     </section>
   );

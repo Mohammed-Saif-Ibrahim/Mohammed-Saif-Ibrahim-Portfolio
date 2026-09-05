@@ -4,7 +4,7 @@ import { siteUrl, fullName } from "@/lib/site";
 
 const siteName = `${fullName} — Full Stack Developer`;
 const description =
-  "Junior Full Stack Developer specializing in React, Node.js, and scalable web applications. Building production-ready systems with clean architecture and real-world usability.";
+  "Full Stack Developer specializing in React, Node.js, and scalable web applications. Building production-ready systems with clean architecture and real-world usability.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

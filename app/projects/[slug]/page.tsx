@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getProjectBySlug, projects } from "@/lib/projects";
 import type { Metadata } from "next";
 import InteractiveLink from "@/components/interactive-link";
@@ -225,13 +226,23 @@ export default function ProjectDetailPage({
 
             <div className="flex items-start gap-5">
               <div
-                className="flex h-16 w-16 shrink-0 items-center justify-center rounded border text-4xl"
+                className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded border text-4xl"
                 style={{
                   borderColor: `${project.accentColor}30`,
                   background: `${project.accentColor}08`,
                 }}
               >
-                {project.icon}
+                {project.logoSrc ? (
+                  <Image
+                    src={project.logoSrc}
+                    alt={`${project.name} logo`}
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 object-contain"
+                  />
+                ) : (
+                  project.icon
+                )}
               </div>
               <div>
                 <h1
@@ -249,7 +260,7 @@ export default function ProjectDetailPage({
                 >
                   {project.tagline}
                 </p>
-                {project.client && (
+                {project.client ? (
                   <p
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
@@ -260,6 +271,31 @@ export default function ProjectDetailPage({
                     }}
                   >
                     CLIENT: {project.client.toUpperCase()} · {project.year}
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "11px",
+                      color: "#4A5568",
+                      marginTop: "6px",
+                      letterSpacing: "0.1em",
+                    }}
+                  >
+                    INDEPENDENT PRODUCT · {project.year}
+                  </p>
+                )}
+                {project.motivation && (
+                  <p
+                    style={{
+                      color: "#94A3B8",
+                      marginTop: "10px",
+                      fontSize: "13px",
+                      lineHeight: 1.6,
+                      maxWidth: "42rem",
+                    }}
+                  >
+                    {project.motivation}
                   </p>
                 )}
               </div>
@@ -476,6 +512,25 @@ export default function ProjectDetailPage({
                   ))}
                 </div>
               </aside>
+
+              {/* Source code link */}
+              {project.repoUrl && (
+                <a
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block border p-4 text-center transition-all duration-200"
+                  style={{
+                    borderColor: `${project.accentColor}30`,
+                    color: project.accentColor,
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "12px",
+                    letterSpacing: "0.1em",
+                  }}
+                >
+                  VIEW SOURCE ↗
+                </a>
+              )}
 
               {/* Back to portfolio CTA */}
               <InteractiveLink href="/#projects" accent={project.accentColor}>

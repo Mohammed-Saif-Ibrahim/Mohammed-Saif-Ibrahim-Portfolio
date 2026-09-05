@@ -62,7 +62,7 @@ export default function MediaGallery({
         >
           No screenshots or demo videos added yet
         </p>
-        <p
+        {/* <p
           style={{
             color: "#4A5568",
             fontSize: "11px",
@@ -74,7 +74,7 @@ export default function MediaGallery({
           <code style={{ color: accentColor }}>media</code> array in{" "}
           <code style={{ color: accentColor }}>lib/projects.ts</code> to
           showcase screenshots and demo videos here.
-        </p>
+        </p> */}
       </div>
     );
   }

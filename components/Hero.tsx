@@ -171,8 +171,6 @@ export default function Hero() {
                 scalable, production-ready
               </span>{" "}
               web applications with clean architecture and real-world usability.
-              CS student graduating{" "}
-              <span className="font-mono text-[#00FF94]">2026</span>.
             </p>
           </div>
 
@@ -215,7 +213,7 @@ export default function Hero() {
           >
             {[
               { value: "2+", label: "Years Building" },
-              { value: "3+", label: "Projects Shipped" },
+              { value: "4+", label: "Projects Shipped" },
               { value: "3", label: "Core Stacks" },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col">

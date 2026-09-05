@@ -15,10 +15,23 @@ export interface Project {
   challenges: string[];
   outcomes: string[];
   icon: string;
+  /**
+   * Optional path to a custom logo image (served from /public), e.g.
+   * "/icons/glamsync.png". When set, this renders instead of the emoji
+   * `icon` in project cards and the detail page.
+   */
+  logoSrc?: string;
   featured: boolean;
   year: string;
   client?: string;
+  /**
+   * Why this was built, for projects with no client — e.g. an independently
+   * conceived product. Rendered in place of the "CLIENT: ..." line when
+   * `client` is not set.
+   */
+  motivation?: string;
   liveUrl?: string;
+  repoUrl?: string;
   media?: { type: "image" | "video"; src: string; caption?: string }[];
 }
 
@@ -160,6 +173,7 @@ export const projects: Project[] = [
     ],
 
     icon: "📊",
+    logoSrc: "/icons/technologypeople.png",
     featured: true,
     year: "2026",
     liveUrl: "https://companion-frontend-ten.vercel.app/",
@@ -308,6 +322,7 @@ export const projects: Project[] = [
     ],
 
     icon: "🚀",
+    logoSrc: "/icons/technologypeople.png",
     featured: false,
     year: "2026",
     liveUrl: "https://www.technologypeople.ae/",
@@ -447,10 +462,131 @@ export const projects: Project[] = [
     ],
 
     icon: "✨",
+    logoSrc: "/icons/glamsync.png",
     featured: false,
     year: "2026",
 
     media: [],
+  },
+  {
+    id: "04",
+    slug: "developer-assessment-platform",
+    name: "Developer Assessment Platform",
+    tagline:
+      "Independently built platform for practicing and assessing developer skills",
+    description:
+      "A full-stack platform for practicing and assessing programming knowledge through MCQs, theory questions, code-output questions, and debugging questions — with a separate candidate-facing app, a dedicated admin console, and a single Fastify + PostgreSQL backend. Built independently to explore a stateless, localStorage-first architecture rather than the typical server-tracked assessment model.",
+
+    longDescription:
+      "Developer Assessment Platform is an independently conceived and built product, not client work — it exists because I wanted a proper practice ground for developer interview prep and a self-contained excuse to design a full multi-app architecture from a blank page, with no requirements handed to me. The system is an npm-workspaces monorepo split into three apps and three shared packages: a candidate-facing Next.js 14 (App Router) app for taking quizzes, a separate Next.js 14 admin console for managing content, and a Fastify + TypeScript REST API sitting in front of PostgreSQL, with Drizzle ORM providing a typed schema and lightweight migrations and Zod validating every request. The core architectural decision was to treat Postgres purely as a content store — subjects, topics, questions, question options, admin accounts, and a couple of global settings — and nothing else. There is no assessments table, no attempts table, no bookmarks table, and no per-visitor identity anywhere in the database. The public API (`/api/v1/subjects`, `/api/v1/questions`, ...) is entirely unauthenticated and read-only content, returning question pools with their correct answers and explanations embedded, because grading is designed to happen entirely client-side. Quiz generation, grading, scoring, and weak-area analysis all live in a single client-side module (`quizEngine.ts`) in the candidate app, with everything — the generated assessment, full attempt history capped at the 50 most recent runs, computed weak-area breakdowns, and bookmarks — persisted in the browser's localStorage rather than a server-side session. The admin console has its own authentication path: JWT sessions carried in an HttpOnly, Secure cookie set on login, verified independently on every admin route by a `requireAdmin` Fastify preHandler rather than being enforced only by hiding pages in the frontend, and admin passwords hashed with Argon2id. The UI system across both frontends is deliberately strict black-and-white — no color, just typography, hairline borders, and a code-editor-inspired accent language of monospace tags and line-numbered code blocks — with dark mode as the default and light mode a single toggle away. The whole system is designed around a clear trade-off: candidates get a completely frictionless, account-free way to practice, at the cost of no cross-device sync and no admin-side visibility into candidate activity, since none of that data ever reaches the server.",
+
+    type: "INDEPENDENT",
+    status: "SHIPPED",
+    accentColor: "#38BDF8",
+    motivation:
+      "Built independently, not for a client — a self-directed product to sharpen developer interview prep and to design a full multi-app architecture end-to-end with no external requirements.",
+
+    stack: [
+      "Next.js 14",
+      "App Router",
+      "TypeScript",
+      "Fastify",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "Zod",
+      "Tailwind CSS",
+      "@fastify/jwt",
+      "Argon2",
+      "HttpOnly Cookies",
+      "npm Workspaces",
+      "Docker",
+      "Vitest",
+      "Render",
+    ],
+    keyFeatures: [
+      "Three-app monorepo: candidate app, admin console, and a single Fastify + PostgreSQL API",
+      "Stateless, unauthenticated public API — quiz generation, grading, and progress tracking run entirely client-side in localStorage",
+      "MCQ, theory, code-output, and debugging question types across configurable subjects and topics",
+      "Admin console with JWT + Argon2id auth over HttpOnly cookies, verified server-side on every admin route",
+      "Weak-area analysis computed on read from local attempt history against an admin-configurable accuracy threshold",
+      "Strict black-and-white, code-editor-inspired UI system with dark mode by default",
+    ],
+
+    features: [
+      "npm-workspaces monorepo: candidate app (user-web), admin console (admin-web), and API, plus shared database/shared/types packages",
+      "Fastify + TypeScript REST API with a public read-only content surface and a separate authenticated admin surface",
+      "PostgreSQL schema (via Drizzle ORM) scoped purely to content: subjects, topics, questions, question options, admin users, and global settings",
+      "No server-side candidate accounts, sessions, or per-visitor identity anywhere in the system",
+      "Client-side quiz engine handling assessment generation, grading, scoring, and weak-area computation",
+      "Assessment state, attempt history (capped at 50 most recent), progress, and bookmarks all persisted in localStorage",
+      "Admin authentication via @fastify/jwt with Argon2id-hashed passwords, sessions carried in HttpOnly/Secure cookies",
+      "requireAdmin preHandler enforced independently on every admin route, not just hidden in the frontend",
+      "Admin console for managing subjects, topics, and questions, including publish/unpublish workflows",
+      "Configurable weak-area threshold and minimum-attempts settings exposed to the admin and consumed by the client",
+      "Zod-validated request/response contracts shared across the API and both frontends",
+      "Seed script for sample subjects (JavaScript, React, TypeScript, SQL), topics, and questions",
+      "Dockerized PostgreSQL for local development via docker-compose",
+      "Vitest test suite for the API",
+      "Fastify API and PostgreSQL database deployed and running in production on Render",
+      "Strict black-and-white visual system with monospace, code-editor-inspired accents and dark-mode-default theming",
+    ],
+
+    metrics: [
+      { label: "Apps", value: "3" },
+      { label: "Database", value: "PostgreSQL" },
+      { label: "ORM", value: "Drizzle" },
+      { label: "Auth", value: "JWT + Argon2id" },
+      { label: "Question Types", value: "4" },
+      { label: "Client State", value: "localStorage" },
+      { label: "Architecture", value: "Monorepo" },
+      { label: "API Style", value: "REST" },
+      { label: "Hosting", value: "Render" },
+    ],
+
+    challenges: [
+      "Designing a schema-and-API split where Postgres holds only content and every piece of candidate activity — assessments, grading, history, bookmarks — lives entirely client-side instead of in server-tracked tables",
+      "Building a client-side quiz engine responsible for assessment generation, grading, scoring, and weak-area computation, with no server-held attempt state to fall back on",
+      "Structuring an npm-workspaces monorepo cleanly across two Next.js 14 frontends, a Fastify API, and shared database/validation/types packages",
+      "Enforcing admin authorization independently at the API layer via a requireAdmin preHandler on every admin route, rather than relying on frontend route-hiding",
+      "Deciding, deliberately, to expose isCorrect and explanation in the public question API since grading happens client-side and there is no server-held attempt to protect — and documenting that trade-off rather than treating it as an oversight",
+      "Keeping a strict two-color (black and white) design system visually rich and legible across two separate frontends without introducing any accent colors",
+    ],
+
+    outcomes: [
+      "Shipped a working three-app system: candidate app, admin console, and API, deployed and publicly accessible",
+      "Validated a fully stateless public API design with zero candidate accounts, sessions, or server-side tracking",
+      "Built a reusable client-side quiz engine handling generation, grading, scoring, and weak-area analysis",
+      "Implemented admin authentication and authorization enforced independently at the API layer",
+      "Established a typed, schema-as-code database layer with Drizzle ORM and lightweight migrations",
+      "Deployed the Fastify API and PostgreSQL database to production on Render, serving both frontends live",
+      "Produced a self-directed portfolio piece demonstrating full end-to-end architectural ownership, from database schema to UI design system, without external requirements",
+    ],
+
+    icon: "🧪",
+    logoSrc: "/icons/developer-assessment-platform.png",
+    featured: false,
+    year: "2026",
+    liveUrl: "https://developer-assessment-platform.com",
+    repoUrl:
+      "https://github.com/Mohammed-Saif-Ibrahim/Developer-Assessment-Platform",
+
+    media: [
+      {
+        type: "image",
+        src: "/projects/developer-assessment-platform/dashboard.png",
+        caption: "Dashboard",
+      },
+      {
+        type: "image",
+        src: "/projects/developer-assessment-platform/subjects.png",
+        caption: "Subjects Page",
+      },
+      {
+        type: "image",
+        src: "/projects/developer-assessment-platform/test-mode.png",
+        caption: "Test Mode Page",
+      }
+    ],
   },
 ];
 
