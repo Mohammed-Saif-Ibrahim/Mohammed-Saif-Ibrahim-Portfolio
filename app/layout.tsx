@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { siteUrl, fullName } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/next";
 
 const siteName = `${fullName} — Full Stack Developer`;
 const description =
@@ -95,6 +96,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         {children}
+        <Analytics />
       </body>
     </html>
   );
